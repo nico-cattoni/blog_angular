@@ -1,0 +1,9 @@
+<div class="input-group">
+    <input type="text" class="form-control" placeholder="Buscar por título..." [(ngModel)]="searchTerm"
+        (input)="onSearch()">
+    @if (searchTerm) {
+    <button class="btn btn-outline-secondary" type="button" (click)="clearSearch()">
+        <i class="bi bi-x"></i>
+    </button>
+    }
+</div>

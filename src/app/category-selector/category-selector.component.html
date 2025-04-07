@@ -1,0 +1,13 @@
+<div class="input-group">
+    <select class="form-select" [(ngModel)]="selectedCategory" (change)="onCategoryChange()">
+        <option [ngValue]="null">Todas las categorías</option>
+        @for (category of categories; track category.id) {
+        <option [ngValue]="category.id">{{ category.title }}</option>
+        }
+    </select>
+    @if (selectedCategory) {
+    <button class="btn btn-outline-secondary" type="button" (click)="resetFilter()">
+        <i class="bi bi-x"></i>
+    </button>
+    }
+</div>

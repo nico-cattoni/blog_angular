@@ -1,0 +1,109 @@
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0">Nueva Publicación</h3>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+                        <!-- Título -->
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="title" formControlName="title"
+                                [class.is-invalid]="postForm.get('title')?.invalid && postForm.get('title')?.touched">
+                            @if (postForm.get('title')?.invalid && postForm.get('title')?.touched) {
+                            <div class="invalid-feedback">
+                                @if (postForm.get('title')?.errors?.['required']) {
+                                <div>El título es requerido</div>
+                                }
+                                @if (postForm.get('title')?.errors?.['minlength']) {
+                                <div>El título debe tener al menos 5 caracteres</div>
+                                }
+                            </div>
+                            }
+                        </div>
+
+                        <!-- Texto -->
+                        <div class="mb-3">
+                            <label for="text" class="form-label">Texto</label>
+                            <textarea class="form-control" id="text" rows="5" formControlName="text"
+                                [class.is-invalid]="postForm.get('text')?.invalid && postForm.get('text')?.touched"></textarea>
+                            @if (postForm.get('text')?.invalid && postForm.get('text')?.touched) {
+                            <div class="invalid-feedback">
+                                @if (postForm.get('text')?.errors?.['required']) {
+                                <div>El texto es requerido</div>
+                                }
+                                @if (postForm.get('text')?.errors?.['minlength']) {
+                                <div>El texto debe tener al menos 20 caracteres</div>
+                                }
+                            </div>
+                            }
+                        </div>
+
+                        <!-- Autor -->
+                        <div class="mb-3">
+                            <label for="author" class="form-label">Autor</label>
+                            <input type="text" class="form-control" id="author" formControlName="author"
+                                [class.is-invalid]="postForm.get('author')?.invalid && postForm.get('author')?.touched">
+                            @if (postForm.get('author')?.invalid && postForm.get('author')?.touched) {
+                            <div class="invalid-feedback">El autor es requerido</div>
+                            }
+                        </div>
+
+                        <!-- Imagen -->
+                        <div class="mb-3">
+                            <label for="image" class="form-label">URL de la Imagen</label>
+                            <input type="text" class="form-control" id="image" formControlName="image"
+                                [class.is-invalid]="postForm.get('image')?.invalid && postForm.get('image')?.touched">
+                            @if (postForm.get('image')?.invalid && postForm.get('image')?.touched) {
+                            <div class="invalid-feedback">
+                                @if (postForm.get('image')?.errors?.['required']) {
+                                <div>La URL de la imagen es requerida</div>
+                                }
+                                @if (postForm.get('image')?.errors?.['invalidUrl']) {
+                                <div>La URL no es válida</div>
+                                }
+                            </div>
+                            }
+                        </div>
+
+                        <!-- Categoría -->
+                        <div class="mb-3">
+                            <label for="category" class="form-label">Categoría</label>
+                            <select class="form-select" id="category" formControlName="category"
+                                [class.is-invalid]="postForm.get('category')?.invalid && postForm.get('category')?.touched">
+                                <option value="">Selecciona una categoría</option>
+                                @for (category of categories; track category.id) {
+                                <option [value]="category.id">{{ category.title }}</option>
+                                }
+                            </select>
+                            @if (postForm.get('category')?.invalid && postForm.get('category')?.touched) {
+                            <div class="invalid-feedback">La categoría es requerida</div>
+                            }
+                        </div>
+
+                        <!-- Fecha -->
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Fecha de Publicación</label>
+                            <input type="date" class="form-control" id="date"
+                                [value]="postForm.get('date')?.value | date:'yyyy-MM-dd'"
+                                (change)="postForm.get('date')?.setValue($any($event.target).valueAsDate)"
+                                [class.is-invalid]="postForm.get('date')?.invalid && postForm.get('date')?.touched">
+                            @if (postForm.get('date')?.invalid && postForm.get('date')?.touched) {
+                            <div class="invalid-feedback">La fecha es requerida</div>
+                            }
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary"
+                                [disabled]="postForm.invalid">Publicar</button>
+                            <button type="button" class="btn btn-outline-secondary"
+                                (click)="router.navigate(['/home'])">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
